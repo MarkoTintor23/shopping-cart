@@ -7,7 +7,7 @@ const cars = [
     doors: 4,
     price: 22000,
     available: "yes",
-    image: "./img/first car toyota.jpg",
+    image: "/img/toyota-corolla.png",
   },
   {
     id: 2,
@@ -17,7 +17,7 @@ const cars = [
     doors: 4,
     price: 25000,
     available: "yes",
-    image: "./img/honda civic second.webp",
+    image: "/img/honda-civic.webp",
   },
   {
     id: 3,
@@ -27,7 +27,7 @@ const cars = [
     doors: 2,
     price: 35000,
     available: "no",
-    image: "./img/mustant 3.png",
+    image: "/img/ford mustang.jpg",
   },
   {
     id: 4,
@@ -37,7 +37,7 @@ const cars = [
     doors: 4,
     price: 45000,
     available: "yes",
-    image: "./img/BMW 3 Series 4.png",
+    image: "/img/bmw-3.avif",
   },
   {
     id: 5,
@@ -47,7 +47,7 @@ const cars = [
     doors: 2,
     price: 32000,
     available: "no",
-    image: "./img/Chavrolet 5.jpg",
+    image: "/img/chevrolet-camaro.webp",
   },
   {
     id: 6,
@@ -57,7 +57,7 @@ const cars = [
     doors: 4,
     price: 42000,
     available: "yes",
-    image: "./img/audi a4 6.jpg",
+    image: "/img/audi-a4.jpg",
   },
   {
     id: 7,
@@ -67,7 +67,7 @@ const cars = [
     doors: 4,
     price: 50000,
     available: "yes",
-    image: "./img/mercedes e klasa 7.jpg",
+    image: "/img/mercedes-e.webp",
   },
   {
     id: 8,
@@ -77,7 +77,7 @@ const cars = [
     doors: 4,
     price: 38000,
     available: "no",
-    image: "./img/lexus 8.webp",
+    image: "/img/lexus.avif",
   },
   {
     id: 9,
@@ -87,7 +87,7 @@ const cars = [
     doors: 4,
     price: 28000,
     available: "yes",
-    image: "./img/golf 9.jpg",
+    image: "/img/gol.jpg",
   },
   {
     id: 10,
@@ -97,6 +97,32 @@ const cars = [
     doors: 4,
     price: 32000,
     available: "yes",
-    image: "./img/subaru 10.png",
+    image: "/img/subaru.jpg",
   },
 ];
+
+const carList = document.querySelector("#car-list");
+
+cars.forEach((car) => {
+  const carsHtml = ` <div class="car">
+  <div class = "first">
+  <h2>${car.name}</h2>
+      <img class="images" src="${car.image}" alt="${car.name}" />
+      </div>
+      <div class = "first">
+      <p>Brand: ${car.brand}</p>
+      <p>Manufactured Year: ${car.manufacturedYear}</p>
+      <p>Doors: ${car.doors}</p>
+      <p>Price: $${car.price}</p>
+      </div>
+      <div class = "first">
+      <p>Status: ${car.available === "yes" ? "Available" : "Sold"}</p>
+      </div>
+      <div class= "second">
+    
+      <button>Delete</button>
+      </div>
+    </div>`;
+
+  carList.insertAdjacentHTML("beforeend", carsHtml);
+});
