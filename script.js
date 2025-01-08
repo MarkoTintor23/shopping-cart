@@ -102,27 +102,77 @@ const cars = [
 ];
 
 const carList = document.querySelector("#car-list");
+const soldCars = document.querySelector("#soldFilter");
+const sorting = document.querySelector("#sortOptions");
 
-cars.forEach((car) => {
-  const carsHtml = ` <div class="car">
-  <div class = "first">
-  <h2>${car.name}</h2>
-      <img class="images" src="${car.image}" alt="${car.name}" />
+const renderCars = function () {
+  carList.innerHTML = "";
+  cars.forEach((car) => {
+    const carsHtml = `
+      <div class="car" id="car-${car.id}">
+        <div class="first">
+          <h2>${car.name}</h2>
+          <img class="images" src="${car.image}" alt="${car.name}" />
+        </div>
+        <div class="first">
+          <p>Brand: ${car.brand}</p>
+          <p>Manufactured Year: ${car.manufacturedYear}</p>
+          <p>Doors: ${car.doors}</p>
+          <p>Price: $${car.price}</p>
+        </div>
+        <div class="first">
+          <p>Status: ${car.available === "yes" ? "Available" : "Sold"}</p>
+        </div>
+        <div class="second">
+          <button class="btn-delete">Delete</button>
+        </div>
       </div>
-      <div class = "first">
-      <p>Brand: ${car.brand}</p>
-      <p>Manufactured Year: ${car.manufacturedYear}</p>
-      <p>Doors: ${car.doors}</p>
-      <p>Price: $${car.price}</p>
-      </div>
-      <div class = "first">
-      <p>Status: ${car.available === "yes" ? "Available" : "Sold"}</p>
-      </div>
-      <div class= "second">
-    
-      <button>Delete</button>
-      </div>
-    </div>`;
+    `;
+    carList.insertAdjacentHTML("beforeend", carsHtml);
+  });
 
-  carList.insertAdjacentHTML("beforeend", carsHtml);
+  const deleteBtns = document.querySelectorAll(".btn-delete");
+  deleteBtns.forEach((deleteBtn) => {
+    deleteBtn.addEventListener("click", function () {
+      const carElement = deleteBtn.closest(".car");
+      carElement.classList.add("display-none");
+    });
+  });
+};
+
+soldCars.addEventListener("change", function (e) {
+  const isChecked = e.target.checked;
+  cars.forEach((car) => {
+    const carElement = document.querySelector(`#car-${car.id}`);
+
+    if (isChecked) {
+      if (car.available === "no") {
+        carElement.classList.add("display-none");
+      } else {
+        carElement.classList.remove("display-none");
+      }
+    } else {
+      carElement.classList.remove("display-none");
+    }
+  });
 });
+
+const sortCars = function () {
+  const sortBy = sorting.value;
+
+  if (sortBy === "price-asc") {
+    cars.sort((a, b) => a.price - b.price);
+  } else if (sortBy === "price-desc") {
+    cars.sort((a, b) => b.price - a.price);
+  } else if (sortBy === "name-asc") {
+    cars.sort((a, b) => a.name.localeCompare(b.name));
+  } else if (sortBy === "name-desc") {
+    cars.sort((a, b) => b.name.localeCompare(a.name));
+  }
+
+  renderCars();
+};
+
+sorting.addEventListener("change", sortCars);
+
+renderCars();
