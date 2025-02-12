@@ -1,114 +1,129 @@
-const cars = [
-  {
-    id: 1,
-    name: "Toyota Corolla",
-    brand: "Toyota",
-    manufacturedYear: 2019,
-    doors: 4,
-    price: 22000,
-    available: "yes",
-    image: "/img/toyota-corolla.png",
-  },
-  {
-    id: 2,
-    name: "Honda Civic",
-    brand: "Honda",
-    manufacturedYear: 2020,
-    doors: 4,
-    price: 25000,
-    available: "yes",
-    image: "/img/honda-civic.webp",
-  },
-  {
-    id: 3,
-    name: "Ford Mustang",
-    brand: "Ford",
-    manufacturedYear: 2018,
-    doors: 2,
-    price: 35000,
-    available: "no",
-    image: "/img/ford mustang.jpg",
-  },
-  {
-    id: 4,
-    name: "BMW 3 Series",
-    brand: "BMW",
-    manufacturedYear: 2021,
-    doors: 4,
-    price: 45000,
-    available: "yes",
-    image: "/img/bmw-3.avif",
-  },
-  {
-    id: 5,
-    name: "Chevrolet Camaro",
-    brand: "Chevrolet",
-    manufacturedYear: 2017,
-    doors: 2,
-    price: 32000,
-    available: "no",
-    image: "/img/chevrolet-camaro.webp",
-  },
-  {
-    id: 6,
-    name: "Audi A4",
-    brand: "Audi",
-    manufacturedYear: 2022,
-    doors: 4,
-    price: 42000,
-    available: "yes",
-    image: "/img/audi-a4.jpg",
-  },
-  {
-    id: 7,
-    name: "Mercedes-Benz E-Class",
-    brand: "Mercedes-Benz",
-    manufacturedYear: 2020,
-    doors: 4,
-    price: 50000,
-    available: "yes",
-    image: "/img/mercedes-e.webp",
-  },
-  {
-    id: 8,
-    name: "Lexus IS",
-    brand: "Lexus",
-    manufacturedYear: 2019,
-    doors: 4,
-    price: 38000,
-    available: "no",
-    image: "/img/lexus.avif",
-  },
-  {
-    id: 9,
-    name: "Volkswagen Golf",
-    brand: "Volkswagen",
-    manufacturedYear: 2021,
-    doors: 4,
-    price: 28000,
-    available: "yes",
-    image: "/img/gol.jpg",
-  },
-  {
-    id: 10,
-    name: "Subaru Outback",
-    brand: "Subaru",
-    manufacturedYear: 2022,
-    doors: 4,
-    price: 32000,
-    available: "yes",
-    image: "/img/subaru.jpg",
-  },
-];
+class Carlist {
+  constructor() {
+    this.cars = [
+      {
+        id: 1,
+        name: "Toyota Corolla",
+        brand: "Toyota",
+        manufacturedYear: 2019,
+        doors: 4,
+        price: 22000,
+        available: "yes",
+        image: "/img/toyota-corolla.png",
+      },
+      {
+        id: 2,
+        name: "Honda Civic",
+        brand: "Honda",
+        manufacturedYear: 2020,
+        doors: 4,
+        price: 25000,
+        available: "yes",
+        image: "/img/honda-civic.webp",
+      },
+      {
+        id: 3,
+        name: "Ford Mustang",
+        brand: "Ford",
+        manufacturedYear: 2018,
+        doors: 2,
+        price: 35000,
+        available: "no",
+        image: "/img/ford mustang.jpg",
+      },
+      {
+        id: 4,
+        name: "BMW 3 Series",
+        brand: "BMW",
+        manufacturedYear: 2021,
+        doors: 4,
+        price: 45000,
+        available: "yes",
+        image: "/img/bmw-3.avif",
+      },
+      {
+        id: 5,
+        name: "Chevrolet Camaro",
+        brand: "Chevrolet",
+        manufacturedYear: 2017,
+        doors: 2,
+        price: 32000,
+        available: "no",
+        image: "/img/chevrolet-camaro.webp",
+      },
+      {
+        id: 6,
+        name: "Audi A4",
+        brand: "Audi",
+        manufacturedYear: 2022,
+        doors: 4,
+        price: 42000,
+        available: "yes",
+        image: "/img/audi-a4.jpg",
+      },
+      {
+        id: 7,
+        name: "Mercedes-Benz E-Class",
+        brand: "Mercedes-Benz",
+        manufacturedYear: 2020,
+        doors: 4,
+        price: 50000,
+        available: "yes",
+        image: "/img/mercedes-e.webp",
+      },
+      {
+        id: 8,
+        name: "Lexus IS",
+        brand: "Lexus",
+        manufacturedYear: 2019,
+        doors: 4,
+        price: 38000,
+        available: "no",
+        image: "/img/lexus.avif",
+      },
+      {
+        id: 9,
+        name: "Volkswagen Golf",
+        brand: "Volkswagen",
+        manufacturedYear: 2021,
+        doors: 4,
+        price: 28000,
+        available: "yes",
+        image: "/img/gol.jpg",
+      },
+      {
+        id: 10,
+        name: "Subaru Outback",
+        brand: "Subaru",
+        manufacturedYear: 2022,
+        doors: 4,
+        price: 32000,
+        available: "yes",
+        image: "/img/subaru.jpg",
+      },
+    ];
+    this.carList = document.querySelector("#car-list");
+    this.soldCars = document.querySelector("#soldFilter");
+    this.sorting = document.querySelector("#sortOptions");
 
-const carList = document.querySelector("#car-list");
-const soldCars = document.querySelector("#soldFilter");
-const sorting = document.querySelector("#sortOptions");
+    this.renderCars();
+    this.addEventListeners();
+  }
 
-const renderCars = function () {
-  carList.innerHTML = "";
-  cars.forEach((car) => {
-    const carsHtml = `
+  addEventListeners() {
+    this.carList.addEventListener("click", (event) => {
+      if (event.target.classList.contains("btn-delete")) {
+        this.deletehandler(event);
+      }
+    });
+    this.soldCars.addEventListener("change", this.soldHandler.bind(this));
+    this.sorting.addEventListener("change", this.sortCars.bind(this));
+  }
+
+  renderCars() {
+    this.carList.innerHTML = "";
+    this.cars.forEach((car) => {
+      const carsHtml = `
       <div class="car" id="car-${car.id}">
         <div class="first">
           <h2>${car.name}</h2>
@@ -128,51 +143,50 @@ const renderCars = function () {
         </div>
       </div>
     `;
-    carList.insertAdjacentHTML("beforeend", carsHtml);
-  });
-
-  const deleteBtns = document.querySelectorAll(".btn-delete");
-  deleteBtns.forEach((deleteBtn) => {
-    deleteBtn.addEventListener("click", function () {
-      const carElement = deleteBtn.closest(".car");
-      carElement.classList.add("display-none");
+      this.carList.insertAdjacentHTML("beforeend", carsHtml);
     });
-  });
-};
+    this.addEventListeners();
+  }
 
-soldCars.addEventListener("change", function (e) {
-  const isChecked = e.target.checked;
-  cars.forEach((car) => {
-    const carElement = document.querySelector(`#car-${car.id}`);
+  sortCars() {
+    const sortBy = this.sorting.value;
 
-    if (isChecked) {
-      if (car.available === "no") {
-        carElement.classList.add("display-none");
+    if (sortBy === "price-asc") {
+      this.cars.sort((a, b) => a.price - b.price);
+    } else if (sortBy === "price-desc") {
+      this.cars.sort((a, b) => b.price - a.price);
+    } else if (sortBy === "a-z") {
+      this.cars.sort((a, b) => a.name.localeCompare(b.name));
+    } else if (sortBy === "z-a") {
+      this.cars.sort((a, b) => b.name.localeCompare(a.name));
+    }
+
+    this.renderCars();
+  }
+
+  soldHandler(event) {
+    const isChecked = event.target.checked;
+    this.cars.forEach((car) => {
+      const carElement = document.querySelector(`#car-${car.id}`);
+
+      if (isChecked) {
+        if (car.available === "no") {
+          carElement.classList.add("display-none");
+        } else {
+          carElement.classList.remove("display-none");
+        }
       } else {
         carElement.classList.remove("display-none");
       }
-    } else {
-      carElement.classList.remove("display-none");
-    }
-  });
-});
-
-const sortCars = function () {
-  const sortBy = sorting.value;
-
-  if (sortBy === "price-asc") {
-    cars.sort((a, b) => a.price - b.price);
-  } else if (sortBy === "price-desc") {
-    cars.sort((a, b) => b.price - a.price);
-  } else if (sortBy === "name-asc") {
-    cars.sort((a, b) => a.name.localeCompare(b.name));
-  } else if (sortBy === "name-desc") {
-    cars.sort((a, b) => b.name.localeCompare(a.name));
+    });
   }
 
-  renderCars();
-};
+  deletehandler(event) {
+    const carElement = event.target.closest(".car");
+    if (carElement) {
+      carElement.remove();
+    }
+  }
+}
 
-sorting.addEventListener("change", sortCars);
-
-renderCars();
+const carinjo = new Carlist();
